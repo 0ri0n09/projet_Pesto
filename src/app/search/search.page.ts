@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AlertController} from '@ionic/angular';
+import {HttpService} from "../services/http.service";
 
 @Component({
   selector: 'app-search',
@@ -8,7 +9,7 @@ import {AlertController} from '@ionic/angular';
 })
 export class SearchPage implements OnInit {
 
-  constructor(private alertController: AlertController) { }
+  constructor(private alertController: AlertController, private httpService: HttpService) { }
 
   ngOnInit() {
   }
