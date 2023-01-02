@@ -15,13 +15,13 @@
   <ion-list lines="full">
     <ion-item *ngFor="let pizza of pizzas">
       <ion-avatar slot="start">
-        <img src="{{pizza.img}}">
+        <img alt="Ceci est une magnifique pizza" src="{{pizza.img}}">
       </ion-avatar>
       <ion-label>{{pizza.name}}</ion-label>
       <ion-button color="warning" (click)="editPizza()">
         <ion-icon name="create-outline"></ion-icon>
       </ion-button>
-      <ion-button color="danger" (click)="deletePizza()">
+      <ion-button color="danger" (click)="deletePizza(pizza)">
         <ion-icon name="trash-outline"></ion-icon>
       </ion-button>
     </ion-item>

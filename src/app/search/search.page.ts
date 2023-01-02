@@ -12,7 +12,8 @@ export class SearchPage implements OnInit {
   pizzas: any;
   initialPizzas: any;
 
-  constructor(private alertController: AlertController, private httpService: HttpService) {
+  constructor(private alertController: AlertController,
+              private httpService: HttpService) {
 
   }
   ngOnInit() {
@@ -27,11 +28,6 @@ export class SearchPage implements OnInit {
       header: 'Ajouter une pizza',
       inputs: [
         {
-          name: 'image',
-          type: 'text',
-          placeholder: 'Image'
-        },
-        {
           name: 'name',
           type: 'text',
           placeholder: 'Nom'
@@ -45,25 +41,32 @@ export class SearchPage implements OnInit {
           name: 'ingredients',
           type: 'text',
           placeholder: 'Ingrédients'
-        }
+        },
+        {
+          name: 'img',
+          type: 'text',
+          placeholder: 'Image'
+        },
       ],
       buttons: [
         {
           text: 'Annuler',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
         }, {
           text: 'Confirmer',
           handler: (data) => {
-            console.log('Confirm Ok', data);
+            this.httpService.postData(data)
+              .subscribe(() => {
+                this.httpService.getData()
+                  .subscribe(items => {
+                    this.pizzas = items;
+                  });
+              });
           }
         }
       ]
     });
-
     await alert.present();
   }
 
@@ -97,13 +100,10 @@ export class SearchPage implements OnInit {
           text: 'Annuler',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
         }, {
           text: 'Confirmer',
           handler: (data) => {
-            console.log('Confirm Ok', data);
+            //TODO
           }
         }
       ]
@@ -112,7 +112,7 @@ export class SearchPage implements OnInit {
     await alert2.present();
   }
 
-  async deletePizza() {
+  async deletePizza(pizza) {
     const alert3 = await this.alertController.create({
       header: 'Supprimer une pizza',
       message: 'Cette action ne peut pas être annulée',
@@ -121,18 +121,19 @@ export class SearchPage implements OnInit {
           text: 'Annuler',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
         }, {
           text: 'Confirmer',
           handler: () => {
-            console.log('Confirm Ok');
+            this.httpService.deleteData(pizza.id).subscribe(() => {
+              this.httpService.getData()
+                .subscribe(items => {
+                  this.pizzas = items;
+                });
+            });
           }
         }
       ]
     });
-
     await alert3.present();
   }
 
