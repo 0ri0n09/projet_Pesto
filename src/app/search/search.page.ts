@@ -28,9 +28,9 @@ export class SearchPage implements OnInit {
           placeholder: 'Prix'
         },
         {
-          name: 'description',
+          name: 'ingredients',
           type: 'text',
-          placeholder: 'Description'
+          placeholder: 'Ingrédients'
         }
       ],
       buttons: [
@@ -70,7 +70,7 @@ export class SearchPage implements OnInit {
         {
           name: 'description',
           type: 'text',
-          value: 'Description'
+          value: 'Ingrédients'
         }
       ],
       buttons: [
