@@ -12,8 +12,8 @@ export class HttpService {
     return this.http.post('https://ynov.jcatania.io/pesto-pizzas/', data);
   }
 
-  putData(data: any) {
-    return this.http.put('https://ynov.jcatania.io/pesto-pizzas/', data);
+  putData(id: string, data: any) {
+    return this.http.put(`https://ynov.jcatania.io/pesto-pizzas/${id}`, data);
   }
 
   getData() {

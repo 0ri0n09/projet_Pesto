@@ -70,30 +70,30 @@ export class SearchPage implements OnInit {
     await alert.present();
   }
 
-  async editPizza() {
+  async editPizza(pizza) {
     const alert2 = await this.alertController.create({
       header: 'Modifier une pizza',
       inputs: [
         {
-          name: 'image',
-          type: 'text',
-          placeholder: 'Image'
-        },
-        {
           name: 'name',
           type: 'text',
-          value: 'Nom'
+          value: pizza.name
         },
         {
           name: 'price',
           type: 'text',
-          value: 'Prix'
+          value: pizza.price
         },
         {
-          name: 'description',
+          name: 'ingredients',
           type: 'text',
-          value: 'Ingrédients'
-        }
+          value: pizza.ingredients
+        },
+        {
+          name: 'img',
+          type: 'text',
+          value: pizza.img
+        },
       ],
       buttons: [
         {
@@ -103,7 +103,12 @@ export class SearchPage implements OnInit {
         }, {
           text: 'Confirmer',
           handler: (data) => {
-            //TODO
+            this.httpService.putData(pizza.id, data).subscribe(() => {
+              this.httpService.getData()
+                .subscribe(items => {
+                  this.pizzas = items;
+                });
+            });
           }
         }
       ]
