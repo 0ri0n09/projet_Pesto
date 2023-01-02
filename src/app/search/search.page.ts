@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AlertController} from '@ionic/angular';
-import {HttpService} from "../services/http.service";
+import {HttpService} from '../services/http.service';
 
 @Component({
   selector: 'app-search',
@@ -9,15 +9,28 @@ import {HttpService} from "../services/http.service";
 })
 export class SearchPage implements OnInit {
 
-  constructor(private alertController: AlertController, private httpService: HttpService) { }
+  pizzas: any;
+  initialPizzas: any;
 
+  constructor(private alertController: AlertController, private httpService: HttpService) {
+
+  }
   ngOnInit() {
+    this.httpService.getData().subscribe(data => {
+      this.pizzas = data;
+      this.initialPizzas = this.pizzas;
+    });
   }
 
   async createPizza() {
     const alert = await this.alertController.create({
       header: 'Ajouter une pizza',
       inputs: [
+        {
+          name: 'image',
+          type: 'text',
+          placeholder: 'Image'
+        },
         {
           name: 'name',
           type: 'text',
@@ -58,6 +71,11 @@ export class SearchPage implements OnInit {
     const alert2 = await this.alertController.create({
       header: 'Modifier une pizza',
       inputs: [
+        {
+          name: 'image',
+          type: 'text',
+          placeholder: 'Image'
+        },
         {
           name: 'name',
           type: 'text',
@@ -118,4 +136,12 @@ export class SearchPage implements OnInit {
     await alert3.present();
   }
 
+  searchPizzas(event) {
+    const searchTerm = event.target.value;
+    if (searchTerm) {
+      this.pizzas = this.pizzas.filter(pizza => pizza.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+    } else {
+      this.pizzas = this.initialPizzas;
+    }
+  }
 }
