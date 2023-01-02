@@ -1,5 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
+import {HttpService} from '../services/http.service';
 
 @Component({
   selector: 'app-home',
@@ -7,11 +8,13 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  pizzas: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private httpService: HttpService) {}
 
   ngOnInit() {
-
+    this.httpService.getData().subscribe(data => {
+      this.pizzas = data;
+    });
   }
-
 }

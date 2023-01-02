@@ -8,14 +8,14 @@
 <ion-content>
   <ion-grid>
     <ion-col>
-      <ion-card>
-        <img src="https://static.750g.com/images/640-420/40aa1a90bb47bba1a235eeb66eb11e4b/gettyimages-954475908.jpg"/>
+      <ion-card *ngFor="let pizza of pizzas">
+        <img src="{{pizza.img}}"/>
         <ion-card-header>
-          <ion-card-title>4 Fromages </ion-card-title>
-          <ion-card-subtitle>Prix: 11.99€</ion-card-subtitle>
+          <ion-card-title>{{pizza.name}}</ion-card-title>
+          <ion-card-subtitle>Prix: {{pizza.price}}€</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-          Coulis de tomate, parmesan râpé, gorgonzola, mozzarella, bûchette de chèvre, origan séché
+          {{pizza.ingredients}}
         </ion-card-content>
         <ion-item>
           <ion-button slot="end">
