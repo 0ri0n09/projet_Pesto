@@ -9,37 +9,44 @@ import {HttpService} from '../services/http.service';
 })
 export class CartPage implements OnInit {
 
-  items = [
-    {
-      image: 'assets/img/item1.jpg',
-      name: 'Item 1',
-      description: 'This is a description of item 1',
-      price: 10,
-    },
-    {
-      image: 'assets/img/item2.jpg',
-      name: 'Item 2',
-      description: 'This is a description of item 2',
-      price: 20,
-    }
-  ];
+  cart: any[];
+  items = [];
   price = 0;
   delivery = 5;
   total = 0;
-  cart: any[];
 
   constructor(private alertController: AlertController, private httpService: HttpService) { }
   ngOnInit() {
-    this.calculateTotal();
     this.cart = JSON.parse(localStorage.getItem('cart'));
+    this.items = this.cart;
+    this.calculateTotal();
   }
 
-  removeItem(item: any) {
-    const index = this.items.indexOf(item);
+  ionViewWillEnter() {
+    this.cart = JSON.parse(localStorage.getItem('cart'));
+    this.items = this.cart;
+    this.calculateTotal();
+  }
+
+  removeItem(itemToRemove: any) {
+    const index = this.items.indexOf(itemToRemove);
     if (index > -1) {
       this.items.splice(index, 1);
       this.calculateTotal();
     }
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    const indexLocalStorage = cart.findIndex(item => item.name === itemToRemove.name);
+    if (indexLocalStorage > -1) {
+      cart.splice(indexLocalStorage, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      this.calculateTotal();
+    }
+  }
+
+  clearCart() {
+    this.cart = [];
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+    this.items.length = 0;
   }
 
   calculateTotal() {
@@ -57,11 +64,7 @@ export class CartPage implements OnInit {
       buttons: ['OK']
     });
     await alert.present();
-  }
-
-  clearCart() {
-    this.cart = [];
-    localStorage.setItem('cart', JSON.stringify(this.cart));
+    this.clearCart();
   }
 
   getCartLength() {
