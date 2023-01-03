@@ -26,10 +26,12 @@ export class CartPage implements OnInit {
   price = 0;
   delivery = 5;
   total = 0;
+  cart: any[];
 
   constructor(private alertController: AlertController, private httpService: HttpService) { }
   ngOnInit() {
     this.calculateTotal();
+    this.cart = JSON.parse(localStorage.getItem('cart'));
   }
 
   removeItem(item: any) {
@@ -54,7 +56,21 @@ export class CartPage implements OnInit {
       message: 'La fonctionnalité de paiement n\'a pas été implémentée car elle ne rentre pas dans le cahier des charges',
       buttons: ['OK']
     });
-
     await alert.present();
+  }
+
+  clearCart() {
+    this.cart = [];
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+  }
+
+  getCartLength() {
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    if(!cart){
+      return 0;
+    }
+    else {
+      return cart.length;
+    }
   }
 }

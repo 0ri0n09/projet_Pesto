@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Votre panier</ion-title>
+    <ion-button *ngIf="getCartLength() > 0" expand="block" color="red" (click)="clearCart()">
+      <ion-icon slot="start" name="cart-outline"></ion-icon>
+      Vider le panier
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 

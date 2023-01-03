@@ -8,6 +8,9 @@
       <ion-tab-button tab="cart">
         <ion-icon name="cart-outline"></ion-icon>
         <ion-label>Panier</ion-label>
+        <ion-badge *ngIf="getCartLength() > 0">
+          {{ getCartLength() }}
+        </ion-badge>
       </ion-tab-button>
       <ion-tab-button tab="search">
         <ion-icon name="search-outline"></ion-icon>

@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   constructor() {}
+
+  getCartLength() {
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    if(!cart){
+      return 0;
+    }
+    else {
+      return cart.length;
+    }
+  }
 }
