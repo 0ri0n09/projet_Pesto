@@ -24,7 +24,7 @@ export class SearchPage implements OnInit {
   }
 
   async createPizza() {
-    const alert = await this.alertController.create({
+    const addAlert = await this.alertController.create({
       header: 'Ajouter une pizza',
       inputs: [
         {
@@ -76,11 +76,11 @@ export class SearchPage implements OnInit {
         }
       ]
     });
-    await alert.present();
+    await addAlert.present();
   }
 
   async editPizza(pizza) {
-    const alert2 = await this.alertController.create({
+    const editAlert = await this.alertController.create({
       header: 'Modifier une pizza',
       inputs: [
         {
@@ -123,11 +123,11 @@ export class SearchPage implements OnInit {
       ]
     });
 
-    await alert2.present();
+    await editAlert.present();
   }
 
   async deletePizza(pizza) {
-    const alert3 = await this.alertController.create({
+    const deleteAlert = await this.alertController.create({
       header: 'Supprimer une pizza',
       message: 'Cette action ne peut pas être annulée',
       buttons: [
@@ -148,7 +148,7 @@ export class SearchPage implements OnInit {
         }
       ]
     });
-    await alert3.present();
+    await deleteAlert.present();
   }
 
   searchPizzas(event) {
