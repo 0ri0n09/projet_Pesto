@@ -24,7 +24,7 @@ export class SearchPage implements OnInit {
   }
 
   async createPizza() {
-    const alert = await this.alertController.create({
+    const addAlert = await this.alertController.create({
       header: 'Ajouter une pizza',
       inputs: [
         {
@@ -55,7 +55,16 @@ export class SearchPage implements OnInit {
           cssClass: 'secondary',
         }, {
           text: 'Confirmer',
-          handler: (data) => {
+          handler: async (data) => {
+            if (this.pizzas.some(pizza => pizza.name.localeCompare(data.name, undefined, {sensitivity: 'base'}) === 0)) {
+              const errorAlert = await this.alertController.create({
+                header: 'Erreur survenue',
+                message: 'Le nom que vous avez rentré existe déjà',
+                buttons: ['OK']
+              });
+              await errorAlert.present();
+              return;
+            }
             this.httpService.postData(data)
               .subscribe(() => {
                 this.httpService.getData()
@@ -67,11 +76,11 @@ export class SearchPage implements OnInit {
         }
       ]
     });
-    await alert.present();
+    await addAlert.present();
   }
 
   async editPizza(pizza) {
-    const alert2 = await this.alertController.create({
+    const editAlert = await this.alertController.create({
       header: 'Modifier une pizza',
       inputs: [
         {
@@ -114,11 +123,11 @@ export class SearchPage implements OnInit {
       ]
     });
 
-    await alert2.present();
+    await editAlert.present();
   }
 
   async deletePizza(pizza) {
-    const alert3 = await this.alertController.create({
+    const deleteAlert = await this.alertController.create({
       header: 'Supprimer une pizza',
       message: 'Cette action ne peut pas être annulée',
       buttons: [
@@ -139,7 +148,7 @@ export class SearchPage implements OnInit {
         }
       ]
     });
-    await alert3.present();
+    await deleteAlert.present();
   }
 
   searchPizzas(event) {
