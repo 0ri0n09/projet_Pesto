@@ -55,7 +55,16 @@ export class SearchPage implements OnInit {
           cssClass: 'secondary',
         }, {
           text: 'Confirmer',
-          handler: (data) => {
+          handler: async (data) => {
+            if (this.pizzas.some(pizza => pizza.name.localeCompare(data.name, undefined, {sensitivity: 'base'}) === 0)) {
+              const errorAlert = await this.alertController.create({
+                header: 'Erreur survenue',
+                message: 'Le nom que vous avez rentré existe déjà',
+                buttons: ['OK']
+              });
+              await errorAlert.present();
+              return;
+            }
             this.httpService.postData(data)
               .subscribe(() => {
                 this.httpService.getData()
