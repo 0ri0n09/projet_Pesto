@@ -18,9 +18,8 @@
           {{pizza.ingredients}}
         </ion-card-content>
         <ion-item>
-          <ion-button slot="end" (click)="addToCart($event, pizza.id)">
-            <ion-icon slot="start" name="bag-add-outline"></ion-icon>
-            <ion-label>Ajouter au panier</ion-label>
+          <ion-button slot="end" color="success" (click)="addToCart($event, pizza.id)">
+            <ion-icon name="bag-add-outline"></ion-icon>
           </ion-button>
         </ion-item>
       </ion-card>

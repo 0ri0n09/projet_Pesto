@@ -1,13 +1,8 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Votre panier</ion-title>
-    <ion-button *ngIf="getCartLength() > 0" expand="block" color="red" (click)="clearCart()">
-      <ion-icon slot="start" name="cart-outline"></ion-icon>
-      Vider le panier
-    </ion-button>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-list *ngIf="items.length > 0">
     <ion-item *ngFor="let item of items">
@@ -53,8 +48,12 @@
       <h3>{{total}} €</h3>
     </ion-label>
   </ion-item>
-  <ion-button *ngIf="items.length > 0" expand="block" color="primary" (click)="openPaymentModal()">
+  <ion-button *ngIf="items.length > 0" color="success" (click)="openPaymentModal()">
     <ion-icon slot="start" name="cart-outline"></ion-icon>
     Passer commande
+  </ion-button>
+  <ion-button color="primary" (click)="clearCart()">
+    <ion-icon slot="start" name="cart-outline"></ion-icon>
+    Vider le panier
   </ion-button>
 </ion-content>
