@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../services/http.service';
+import { RefreshService } from '../services/refresh.service';
 
 @Component({
   selector: 'app-home',
@@ -10,12 +11,19 @@ export class HomePage implements OnInit {
   pizzas: any;
   cart: any[];
 
-  constructor(private httpService: HttpService) {}
+  constructor(private httpService: HttpService, private refreshService: RefreshService) {}
 
   ngOnInit() {
     this.httpService.getData().subscribe(data => {
       this.pizzas = data;
       this.cart = JSON.parse(localStorage.getItem('cart'));
+    });
+
+    this.refreshService.refresh$.subscribe(() => {
+      this.httpService.getData().subscribe(data => {
+        this.pizzas = data;
+        this.cart = JSON.parse(localStorage.getItem('cart'));
+      });
     });
   }
 
@@ -29,7 +37,6 @@ export class HomePage implements OnInit {
       this.cart = [];
     }
     this.cart.push(pizzaToAdd);
-    console.log(this.cart);
     localStorage.setItem('cart', JSON.stringify(this.cart));
   }
 }

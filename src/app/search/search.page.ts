@@ -1,26 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AlertController} from '@ionic/angular';
 import {HttpService} from '../services/http.service';
+import {Camera} from '@ionic-native/camera/ngx';
+import { RefreshService } from '../services/refresh.service';
 
+interface CameraOptions {
+  quality?: number;
+  destinationType?: number;
+  sourceType?: number;
+  encodingType?: number;
+  mediaType?: number;
+  allowEdit?: boolean;
+  correctOrientation?: boolean;
+  saveToPhotoAlbum?: boolean;
+  cameraDirection?: number;
+}
 @Component({
   selector: 'app-search',
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
 })
+
 export class SearchPage implements OnInit {
 
   pizzas: any;
   initialPizzas: any;
-
+  camera: Camera;
   constructor(private alertController: AlertController,
-              private httpService: HttpService) {
-
+              private httpService: HttpService,
+              private refreshService: RefreshService) {
   }
   ngOnInit() {
     this.httpService.getData().subscribe(data => {
       this.pizzas = data;
       this.initialPizzas = this.pizzas;
     });
+    this.refreshHome();
+  }
+
+  refreshHome() {
+    this.refreshService.refresh();
   }
 
   async createPizza() {
@@ -45,7 +64,7 @@ export class SearchPage implements OnInit {
         {
           name: 'img',
           type: 'text',
-          placeholder: 'Image'
+          placeholder: 'Image (URL)'
         },
       ],
       buttons: [
@@ -158,5 +177,27 @@ export class SearchPage implements OnInit {
     } else {
       this.pizzas = this.initialPizzas;
     }
+  }
+
+  addImgPizza(pizza: any) {
+    this.camera = new Camera();
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    };
+    this.camera.getPicture(options).then((imageData) => {
+      pizza.img = 'data:image/jpeg;base64,' + imageData;
+      this.httpService.putData(pizza.id, pizza).subscribe(() => {
+        this.httpService.getData()
+          .subscribe(items => {
+            this.pizzas = items;
+          });
+      });
+    }, (err) => {
+      console.log('ERREUR CAMERA');
+    });
+    this.refreshHome();
   }
 }
