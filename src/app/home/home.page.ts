@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpService} from '../services/http.service';
+import { Component, OnInit } from '@angular/core';
+import { HttpService } from '../services/http.service';
 import { RefreshService } from '../services/refresh.service';
 
 @Component({
