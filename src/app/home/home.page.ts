@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { RefreshService } from '../services/refresh.service';
+import {DetailModalComponent} from '../components/detail-modal/detail-modal.component';
+import {ModalController} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +13,9 @@ export class HomePage implements OnInit {
   pizzas: any;
   cart: any[];
 
-  constructor(private httpService: HttpService, private refreshService: RefreshService) {}
+  constructor(private httpService: HttpService,
+              private refreshService: RefreshService,
+              private modalCtrl: ModalController) {}
 
   ngOnInit() {
     this.httpService.getData().subscribe(data => {
@@ -39,4 +43,15 @@ export class HomePage implements OnInit {
     this.cart.push(pizzaToAdd);
     localStorage.setItem('cart', JSON.stringify(this.cart));
   }
+
+  async openModal(pizza: any) {
+    const modal = await this.modalCtrl.create({
+      component: DetailModalComponent,
+      componentProps: {
+        pizza
+      }
+    });
+    modal.present();
+  }
+
 }
