@@ -11,7 +11,7 @@
     "test": "ng test --no-watch --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "run:android": "ionic cap run android --target Pixel_5_API_33",
+    "run:android": "ionic cap run android --target Pixel_5_API_30",
     "run:ios": "ionic cap run ios"
   },
   "private": true,

@@ -8,8 +8,8 @@
 <ion-content>
   <ion-grid>
     <ion-col>
-      <ion-card (click)="openModal(pizza)" *ngFor="let pizza of pizzas">
-        <img alt="Magnifique pizza cuite au feu de bois" src="{{pizza.img}}"/>
+      <ion-card *ngFor="let pizza of pizzas">
+        <img (click)="openModal(pizza)" alt="Magnifique pizza cuite au feu de bois" src="{{pizza.img}}"/>
         <ion-card-header>
           <ion-card-title>{{pizza.name}}</ion-card-title>
           <ion-card-subtitle>Prix: {{pizza.price}}€</ion-card-subtitle>

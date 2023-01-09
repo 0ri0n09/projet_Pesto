@@ -122,6 +122,11 @@ export class SearchPage implements OnInit {
           type: 'text',
           value: pizza.img
         },
+        {
+          name: 'description',
+          type: 'text',
+          value: pizza.desc,
+        },
       ],
       buttons: [
         {
