@@ -66,6 +66,11 @@ export class SearchPage implements OnInit {
           type: 'text',
           placeholder: 'Image (URL)'
         },
+        {
+          name: 'description',
+          type: 'text',
+          value: 'Description',
+        },
       ],
       buttons: [
         {
