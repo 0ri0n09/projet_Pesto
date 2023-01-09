@@ -31,6 +31,14 @@ export class HomePage implements OnInit {
     });
   }
 
+  ionViewWillEnter() {
+    this.httpService.getData().subscribe(data => {
+      this.pizzas = data;
+      this.cart = JSON.parse(localStorage.getItem('cart'));
+    });
+  }
+
+
   addToCart($event: MouseEvent, id: any) {
     this.cart = JSON.parse(localStorage.getItem('cart'));
     const pizzaToAdd = this.pizzas.find(pizza => pizza.id === id);

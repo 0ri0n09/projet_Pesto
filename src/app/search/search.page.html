@@ -14,9 +14,6 @@
 <ion-content class="ion-padding">
   <ion-list lines="full">
     <ion-item *ngFor="let pizza of pizzas">
-      <ion-thumbnail slot="start">
-        <img alt="Ceci est une magnifique pizza" src="{{pizza.img}}">
-      </ion-thumbnail>
       <ion-label>{{pizza.name}}</ion-label>
       <ion-button color="warning" (click)="editPizza(pizza)">
         <ion-icon name="create-outline"></ion-icon>
@@ -27,11 +24,9 @@
       <ion-button color="secondary" (click)="addImgFromGallery(pizza)">
         <ion-icon name="image-outline"></ion-icon>
       </ion-button>
-
       <ion-button color="danger" (click)="deletePizza(pizza)">
         <ion-icon name="trash-outline"></ion-icon>
       </ion-button>
     </ion-item>
   </ion-list>
 </ion-content>
-

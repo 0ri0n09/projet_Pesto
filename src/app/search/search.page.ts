@@ -42,6 +42,13 @@ export class SearchPage implements OnInit {
     this.refreshService.refresh();
   }
 
+  ionViewWillEnter() {
+    this.httpService.getData().subscribe(data => {
+      this.pizzas = data;
+      this.initialPizzas = this.pizzas;
+    });
+  }
+
   async createPizza() {
     const addAlert = await this.alertController.create({
       header: 'Ajouter une pizza',
@@ -130,7 +137,7 @@ export class SearchPage implements OnInit {
         {
           name: 'description',
           type: 'text',
-          value: pizza.desc,
+          value: pizza.description,
         },
       ],
       buttons: [
@@ -205,7 +212,7 @@ export class SearchPage implements OnInit {
             this.pizzas = items;
           });
       });
-    }, (err) => {
+    }, () => {
       console.log('ERREUR PHOTO CAMERA');
     });
     this.refreshHome();
@@ -229,7 +236,7 @@ export class SearchPage implements OnInit {
             this.pizzas = items;
           });
       });
-    }, (err) => {
+    }, () => {
       console.log('ERREUR PHOTO FROM GALLERY');
     });
     this.refreshHome();
