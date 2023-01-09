@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {AlertController} from '@ionic/angular';
-import {HttpService} from '../services/http.service';
-import {Camera} from '@ionic-native/camera/ngx';
+import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+import { HttpService } from '../services/http.service';
+import { Camera } from '@ionic-native/camera/ngx';
 import { RefreshService } from '../services/refresh.service';
 
 interface CameraOptions {
@@ -189,7 +189,7 @@ export class SearchPage implements OnInit {
     }
   }
 
-  addImgPizza(pizza: any) {
+  async addImgPizza(pizza: any) {
     this.camera = new Camera();
     const options: CameraOptions = {
       quality: 100,
@@ -206,7 +206,31 @@ export class SearchPage implements OnInit {
           });
       });
     }, (err) => {
-      console.log('ERREUR CAMERA');
+      console.log('ERREUR PHOTO CAMERA');
+    });
+    this.refreshHome();
+  }
+
+  async addImgFromGallery(pizza: any) {
+    this.camera = new Camera();
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      allowEdit: false
+    };
+    this.camera.getPicture(options).then((imageData) => {
+      pizza.img = 'data:image/jpeg;base64,' + imageData;
+      this.httpService.putData(pizza.id, pizza).subscribe(() => {
+        this.httpService.getData()
+          .subscribe(items => {
+            this.pizzas = items;
+          });
+      });
+    }, (err) => {
+      console.log('ERREUR PHOTO FROM GALLERY');
     });
     this.refreshHome();
   }
