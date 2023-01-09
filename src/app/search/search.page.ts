@@ -69,7 +69,7 @@ export class SearchPage implements OnInit {
         {
           name: 'description',
           type: 'text',
-          value: 'Description',
+          placeholder: 'Description',
         },
       ],
       buttons: [
