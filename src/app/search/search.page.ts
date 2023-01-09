@@ -130,6 +130,11 @@ export class SearchPage implements OnInit {
           value: pizza.ingredients
         },
         {
+          name: 'img',
+          type: 'text',
+          value: pizza.img
+        },
+        {
           name: 'description',
           type: 'text',
           value: pizza.description,
