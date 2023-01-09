@@ -130,11 +130,6 @@ export class SearchPage implements OnInit {
           value: pizza.ingredients
         },
         {
-          name: 'img',
-          type: 'text',
-          value: pizza.img
-        },
-        {
           name: 'description',
           type: 'text',
           value: pizza.description,
@@ -148,7 +143,8 @@ export class SearchPage implements OnInit {
         }, {
           text: 'Confirmer',
           handler: (data) => {
-            this.httpService.putData(pizza.id, data).subscribe(() => {
+            data.img = pizza.img;
+              this.httpService.putData(pizza.id, data).subscribe(() => {
               this.httpService.getData()
                 .subscribe(items => {
                   this.pizzas = items;
