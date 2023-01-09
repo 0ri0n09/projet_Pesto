@@ -11,9 +11,9 @@ export class CartPage implements OnInit {
 
   cart: any[];
   items = [];
-  price = 0;
-  delivery = 5;
-  total = 0;
+  price = 0.0;
+  delivery = 5.0;
+  total = 0.0;
 
   constructor(private alertController: AlertController, private httpService: HttpService) { }
   ngOnInit() {
@@ -50,11 +50,11 @@ export class CartPage implements OnInit {
   }
 
   calculateTotal() {
-    this.price = 0;
+    this.price = 0.0;
     this.items.forEach(item => {
-      this.price += item.price;
+      this.price = parseFloat(String(this.price)) + parseFloat(String(item.price));
     });
-    this.total = this.price + this.delivery;
+    this.total = parseFloat(String(this.price)) + parseFloat(String(this.delivery));
   }
 
   async openPaymentModal() {
